@@ -1,0 +1,47 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+  <div>
+    <header>
+      <h1>Prueba de petición HTTP GET al API de Wikipedia</h1>
+    </header>
+    <main>
+      <article>
+        <h2>Artículos en la categoría:</h2>
+        <ul id="cat-list"></ul>
+      </article>
+    </main>
+    <footer>
+      <a href="https://en.wikipedia.org/w/index.php?title=Special:Categories">Referencias: Lista de categorías en Wikipedia Inglés
+</a>
+    </footer>
+  </div>
+  <script>
+    $(document).ready(function(){
+      console.log('ready')
+
+      $.ajax({
+        url: "https://archive.org/services/search/v1/scrape?fields=title&q=collection%3Anasa",
+        type: "GET",
+        dataType: "json",
+      }).done(function(data){
+        console.log(data);
+        data.items.forEach((item, i) => {
+          var li = "<li>"+ item.title + '</li>'
+          $('#cat-list').append(li);
+        });
+
+      })
+    })
+  </script>
+</body>
+</html>
