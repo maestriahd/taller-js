@@ -1,0 +1,47 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+  <div>
+    <header>
+      <h1>Prueba de petición HTTP GET al API de Wikipedia</h1>
+    </header>
+    <main>
+      <article>
+        <h2>Artículos en la categoría:</h2>
+        <ul id="cat-list"></ul>
+      </article>
+    </main>
+    <footer>
+      <a href="https://en.wikipedia.org/w/index.php?title=Special:Categories">Referencias: Lista de categorías en Wikipedia Inglés
+</a>
+    </footer>
+  </div>
+  <script>
+    $(document).ready(function(){
+      console.log('ready')
+
+      $.ajax({
+        url: "https://en.wikipedia.org/w/api.php?action=query&format=json&list=categorymembers&cmtitle=Category%3ADigital_humanities&cmlimit=20&origin=*",
+        type: "GET",
+        dataType: "json",
+      }).done(function(data){
+        console.log(data);
+        data.query.categorymembers.forEach((cat, i) => {
+          var li = '<li><a href="http://en.wikipedia.org/wiki?curid=' + cat.pageid + '" target="_blank">'+ cat.title + '</a></li>'
+          $('#cat-list').append(li);
+        });
+
+      })
+    })
+  </script>
+</body>
+</html>
